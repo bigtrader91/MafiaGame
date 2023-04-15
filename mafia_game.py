@@ -12,7 +12,7 @@ def find_weight(text) -> list:
     if result:
         values = result.group(1)
         
-        print(values)
+        # print(values)
     else:
         print("No match found")
     return list(eval(values))
@@ -134,7 +134,7 @@ class MafiaGame(Player):
         print('의사 1명을 뽑는중...')
         self.doctor = random.choice([p for p in self.players if p is not self.mafia and p is not self.police])
         self.doctor.role = "의사"
-        self.doctor.think("당신은 의사입니다. 밤이되면 한 명을 지목하여 치료할 수 있습니다. 이때 자기자신을 선택할수도 있습니다. 마피아가 죽일만한 시민을 선택하여 치료하세요.")
+        self.doctor.think("당신은 의사입니다. 밤이되면 한 명을 지목하여 치료할 수 있습니다. 마피아가 죽일만한 시민을 선택하여 치료하세요.")
         self.num_mafia = 1
         self.num_citizen = num_players - self.num_mafia 
         
@@ -212,7 +212,7 @@ class MafiaGame(Player):
                 가중치 값은 정수여야 하며, 목록에 있는 플레이어 수와 일치해야 합니다. 아래 양식에 맞춰 가중치 리스트를 작성해주세요. 예: [1, 2, 3]\n투표 대상: {victims}")
             except:
                 text = generate_text(victims)
-        print(1,text)
+      
         try:
             weights = find_weight(text)
             victim = random.choices(victims, weights)[0]
@@ -233,7 +233,7 @@ class MafiaGame(Player):
                 가중치 값은 정수여야 하며, 목록에 있는 플레이어 수와 일치해야 합니다. 아래 양식에 맞춰 가중치 리스트를 작성해주세요. 예: [1, 2, 3]\n투표 대상: {patients}")
             except:
                 text = generate_text(patients)
-        print(2,text)
+        
         try:
             weights = find_weight(text)
             patient = random.choices(patients, weights)[0]
@@ -259,13 +259,13 @@ class MafiaGame(Player):
                 가중치 값은 정수여야 하며, 목록에 있는 플레이어 수와 일치해야 합니다. 아래 양식에 맞춰 리스트를 작성해주세요. 예: [1, 2, 3]\n투표 대상: {suspects}")
             except:
                 text = generate_text(suspects)
-        print(3,text)
+   
         try:
             weights = find_weight(text)
             suspect = random.choices(suspects, weights)[0]
         except:
             suspect = random.choices(suspects)
-        # suspect = self.police.choose(suspects)
+       
         if suspect.role == "마피아":
             self.add_message(f"{suspect.name}은(는) 마피아입니다.",'경찰')
         else:
@@ -319,13 +319,10 @@ class MafiaGame(Player):
                 else:
                     try:
                         text = player.think(f"다음 플레이어 목록에서 마피아로 의심되는 순서대로 가중치를 할당해주세요. \
-                        가중치 값은 정수여야 하며, 목록에 있는 플레이어 수와 일치해야 합니다. 아래 양식에 맞춰 'weight=' 다음에 정확한 가중치 리스트를 작성해주세요. 예: weight=[1, 2, 3]\n투표 대상: {vote_players_name}")
+                        가중치 값은 정수여야 하며, 목록에 있는 플레이어 수와 일치해야 합니다. 아래 양식에 맞춰 가중치 리스트를 작성해주세요. 예: [1, 2, 3]\n투표 대상: {vote_players_name}")
                     except:
                         text=generate_text(vote_players_name)
-              
-
-                    
-                print('투표',text)
+ 
                 weights = find_weight(text)
                 vote = random.choices(vote_players, weights)[0]
                 self.add_message(f"{player.name}님은 {vote}님에게 투표했습니다.", "사회자")
